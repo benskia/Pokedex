@@ -10,7 +10,7 @@ import (
 )
 
 // commandMapNext gets the next 20 location-areas from PokeAPI and displays them.
-func commandMapNext(cfg *config.Config) error {
+func commandMapNext(cfg *config.Config, _ ...string) error {
 	if cfg.NextURL == "" {
 		return errors.New("Already at the last page of locations.")
 	}
@@ -37,7 +37,7 @@ func commandMapNext(cfg *config.Config) error {
 }
 
 // commandMapPrev gets the previous 20 location-areas from PokeAPI and displays them.
-func commandMapPrev(cfg *config.Config) error {
+func commandMapPrev(cfg *config.Config, _ ...string) error {
 	if cfg.PrevURL == "" {
 		return errors.New("Already at the last page of locations.")
 	}

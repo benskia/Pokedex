@@ -5,7 +5,7 @@ import "github.com/benskia/Pokedex/internal/config"
 type cliCommand struct {
 	name        string
 	description string
-	Callback    func(*config.Config) error
+	Callback    func(*config.Config, ...string) error
 }
 
 func GetCommands() map[string]cliCommand {
@@ -29,6 +29,11 @@ func GetCommands() map[string]cliCommand {
 			name:        "mapb",
 			description: "Displays previous 20 locations",
 			Callback:    commandMapPrev,
+		},
+		"explore": {
+			name:        "explore",
+			description: "Displays all pokemon at a location",
+			Callback:    commandExplore,
 		},
 	}
 }

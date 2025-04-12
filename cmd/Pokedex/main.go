@@ -9,6 +9,7 @@ import (
 
 	"github.com/benskia/Pokedex/internal/commands"
 	"github.com/benskia/Pokedex/internal/config"
+	"github.com/benskia/Pokedex/internal/customErr"
 )
 
 // Description:
@@ -23,7 +24,7 @@ import (
 
 func main() {
 	endpoint := "https://pokeapi.co/api/v2/location-area/"
-	interval := 5 * time.Second
+	interval := 60 * time.Second
 	cfg := config.NewConfig(endpoint, interval)
 	scanner := bufio.NewScanner(os.Stdin)
 
@@ -37,19 +38,24 @@ func main() {
 		// Sanitize input
 		args := cleanInput(input)
 		if len(args) < 1 {
-			fmt.Println("missing command")
+			fmt.Println(customErr.ErrMissingCommand)
+		}
+
+		cmdArgs := []string{}
+		if len(args) > 1 {
+			cmdArgs = args[1:]
 		}
 
 		// Execute command
 		commandName := args[0]
 		cmd, ok := commands.GetCommands()[commandName]
 		if !ok {
-			fmt.Printf("Unknown command: %s\n", commandName)
+			fmt.Printf("Invalid command: %s\n", commandName)
 			continue
 		}
 
-		if err := cmd.Callback(cfg); err != nil {
-			fmt.Printf("Command error: %v\n", err)
+		if err := cmd.Callback(cfg, cmdArgs...); err != nil {
+			fmt.Println(err)
 		}
 	}
 }
