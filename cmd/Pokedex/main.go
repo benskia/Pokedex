@@ -20,11 +20,11 @@ import (
 //	- Execute commands
 
 func main() {
+	scanner := bufio.NewScanner(os.Stdin)
 	// REPL
 	for {
 		// Await user input
 		fmt.Print("Pokedex > ")
-		scanner := bufio.NewScanner(os.Stdin)
 		scanner.Scan()
 		input := scanner.Text()
 
@@ -38,12 +38,12 @@ func main() {
 		commandName := args[0]
 		cmd, ok := commands.GetCommands()[commandName]
 		if !ok {
-			fmt.Println("invalid command:", commandName)
+			fmt.Printf("Unknown command: %s\n", commandName)
 			continue
 		}
 
 		if err := cmd.Callback(); err != nil {
-			fmt.Println("error running command:", cmd)
+			fmt.Printf("Error running command: %+v\n", cmd)
 		}
 	}
 }
