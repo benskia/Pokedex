@@ -8,6 +8,7 @@ import (
 
 	"github.com/benskia/Pokedex/internal/config"
 	"github.com/benskia/Pokedex/internal/customErr"
+	"github.com/benskia/Pokedex/internal/customType"
 	"github.com/benskia/Pokedex/internal/utils"
 )
 
@@ -18,7 +19,7 @@ func commandExplore(cfg *config.Config, args ...string) error {
 
 	name := args[0]
 	fmt.Printf("Exploring %s...\n", name)
-	endpoint, err := url.JoinPath(cfg.Endpoint, name)
+	endpoint, err := url.JoinPath(cfg.Endpoint, "location-area", name)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -28,7 +29,9 @@ func commandExplore(cfg *config.Config, args ...string) error {
 		return fmt.Errorf("commandExplore: %w", err)
 	}
 
-	location := Location{}
+	cfg.Cache.Add(name, data)
+
+	location := customtype.Location{}
 	if err := json.Unmarshal(data, &location); err != nil {
 		log.Fatal(err)
 	}

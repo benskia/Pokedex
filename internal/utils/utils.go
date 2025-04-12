@@ -12,10 +12,12 @@ import (
 
 // getPayload retrieves data from an API endpoint or config's cache.
 func GetPayload(cfg *config.Config, key string) ([]byte, error) {
+	body := []byte{}
+
 	// Return cached result if we have it.
-	val, ok := cfg.Cache.Get(key)
+	body, ok := cfg.Cache.Get(key)
 	if ok {
-		return val, nil
+		return body, nil
 	}
 
 	// Key isn't cached, so we'll have to request it from API.
@@ -24,7 +26,7 @@ func GetPayload(cfg *config.Config, key string) ([]byte, error) {
 		log.Fatal(err)
 	}
 
-	body, err := io.ReadAll(res.Body)
+	body, err = io.ReadAll(res.Body)
 	defer res.Body.Close()
 	if err != nil {
 		log.Fatal(err)

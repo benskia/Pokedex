@@ -6,6 +6,7 @@ import (
 	"fmt"
 
 	"github.com/benskia/Pokedex/internal/config"
+	"github.com/benskia/Pokedex/internal/customType"
 	"github.com/benskia/Pokedex/internal/utils"
 )
 
@@ -20,7 +21,9 @@ func commandMapNext(cfg *config.Config, _ ...string) error {
 		return err
 	}
 
-	locationAreas := LocationAreas{}
+	cfg.Cache.Add(cfg.NextURL, data)
+
+	locationAreas := customtype.LocationAreas{}
 	if err := json.Unmarshal(data, &locationAreas); err != nil {
 		return err
 	}
@@ -47,7 +50,9 @@ func commandMapPrev(cfg *config.Config, _ ...string) error {
 		return err
 	}
 
-	locationAreas := LocationAreas{}
+	cfg.Cache.Add(cfg.PrevURL, data)
+
+	locationAreas := customtype.LocationAreas{}
 	if err := json.Unmarshal(data, &locationAreas); err != nil {
 		return err
 	}

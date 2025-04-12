@@ -23,7 +23,7 @@ import (
 //	- Execute commands
 
 func main() {
-	endpoint := "https://pokeapi.co/api/v2/location-area/"
+	endpoint := "https://pokeapi.co/api/v2/"
 	interval := 60 * time.Second
 	cfg := config.NewConfig(endpoint, interval)
 	scanner := bufio.NewScanner(os.Stdin)

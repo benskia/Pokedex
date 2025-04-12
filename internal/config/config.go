@@ -1,8 +1,11 @@
 package config
 
 import (
+	"log"
+	"net/url"
 	"time"
 
+	"github.com/benskia/Pokedex/internal/customType"
 	"github.com/benskia/Pokedex/internal/pokecache"
 )
 
@@ -12,13 +15,20 @@ type Config struct {
 	PrevURL  string
 	Endpoint string
 	Cache    pokecache.Cache
+	Pokedex  map[string]customtype.Pokemon
 }
 
 func NewConfig(endpoint string, interval time.Duration) *Config {
+	nexturl, err := url.JoinPath(endpoint, "location-area")
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	return &Config{
-		NextURL:  endpoint,
+		NextURL:  nexturl,
 		PrevURL:  "",
 		Endpoint: endpoint,
 		Cache:    *pokecache.NewCache(interval),
+		Pokedex:  map[string]customtype.Pokemon{},
 	}
 }
