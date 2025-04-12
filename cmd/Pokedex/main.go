@@ -3,9 +3,10 @@ package main
 import (
 	"bufio"
 	"fmt"
-	"log"
 	"os"
 	"strings"
+
+	"github.com/benskia/Pokedex/internal/commands"
 )
 
 // Description:
@@ -30,11 +31,20 @@ func main() {
 		// Sanitize input
 		args := cleanInput(input)
 		if len(args) < 1 {
-			log.Fatal("missing command")
+			fmt.Println("missing command")
 		}
 
 		// Execute command
-		fmt.Printf("Your command was: %s\n", args[0])
+		commandName := args[0]
+		cmd, ok := commands.GetCommands()[commandName]
+		if !ok {
+			fmt.Println("invalid command:", commandName)
+			continue
+		}
+
+		if err := cmd.Callback(); err != nil {
+			fmt.Println("error running command:", cmd)
+		}
 	}
 }
 
