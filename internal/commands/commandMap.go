@@ -1,6 +1,7 @@
 package commands
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
 
@@ -14,8 +15,13 @@ func commandMapNext(cfg *config.Config) error {
 		return errors.New("Already at the last page of locations.")
 	}
 
+	data, err := utils.GetPayload(cfg, cfg.NextURL)
+	if err != nil {
+		return err
+	}
+
 	locationAreas := LocationAreas{}
-	if err := utils.GetPayload(cfg.NextURL, &locationAreas); err != nil {
+	if err := json.Unmarshal(data, &locationAreas); err != nil {
 		return err
 	}
 
@@ -36,8 +42,13 @@ func commandMapPrev(cfg *config.Config) error {
 		return errors.New("Already at the last page of locations.")
 	}
 
+	data, err := utils.GetPayload(cfg, cfg.PrevURL)
+	if err != nil {
+		return err
+	}
+
 	locationAreas := LocationAreas{}
-	if err := utils.GetPayload(cfg.PrevURL, &locationAreas); err != nil {
+	if err := json.Unmarshal(data, &locationAreas); err != nil {
 		return err
 	}
 

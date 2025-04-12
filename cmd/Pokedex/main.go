@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"strings"
+	"time"
 
 	"github.com/benskia/Pokedex/internal/commands"
 	"github.com/benskia/Pokedex/internal/config"
@@ -21,7 +22,9 @@ import (
 //	- Execute commands
 
 func main() {
-	cfg := config.NewConfig("https://pokeapi.co/api/v2/location-area/")
+	endpoint := "https://pokeapi.co/api/v2/location-area/"
+	interval := 5 * time.Second
+	cfg := config.NewConfig(endpoint, interval)
 	scanner := bufio.NewScanner(os.Stdin)
 
 	// REPL
