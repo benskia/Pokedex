@@ -1,8 +1,12 @@
 package commands
 
-import "fmt"
+import (
+	"fmt"
 
-func commandHelp() error {
+	"github.com/benskia/Pokedex/internal/config"
+)
+
+func commandHelp(_ *config.Config) error {
 	fmt.Print(`
 Welcome to the Pokedex!
 Usage:
