@@ -7,6 +7,7 @@ import (
 	"strings"
 
 	"github.com/benskia/Pokedex/internal/commands"
+	"github.com/benskia/Pokedex/internal/config"
 )
 
 // Description:
@@ -20,7 +21,9 @@ import (
 //	- Execute commands
 
 func main() {
+	cfg := config.NewConfig("https://pokeapi.co/api/v2/location-area/")
 	scanner := bufio.NewScanner(os.Stdin)
+
 	// REPL
 	for {
 		// Await user input
@@ -42,8 +45,8 @@ func main() {
 			continue
 		}
 
-		if err := cmd.Callback(); err != nil {
-			fmt.Printf("Error running command: %+v\n", cmd)
+		if err := cmd.Callback(cfg); err != nil {
+			fmt.Printf("Command error: %v\n", err)
 		}
 	}
 }
