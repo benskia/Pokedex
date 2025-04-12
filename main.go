@@ -34,7 +34,7 @@ func main() {
 		}
 
 		// Execute command
-		fmt.Println("Your command was: ", args[0])
+		fmt.Printf("Your command was: %s\n", args[0])
 	}
 }
 
