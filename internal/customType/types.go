@@ -1,4 +1,4 @@
-package customtype
+package customType
 
 type LocationAreas struct {
 	Count    int    `json:"count"`

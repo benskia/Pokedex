@@ -15,7 +15,7 @@ type Config struct {
 	PrevURL  string
 	Endpoint string
 	Cache    pokecache.Cache
-	Pokedex  map[string]customtype.Pokemon
+	Pokedex  map[string]customType.Pokemon
 }
 
 func NewConfig(endpoint string, interval time.Duration) *Config {
@@ -29,6 +29,6 @@ func NewConfig(endpoint string, interval time.Duration) *Config {
 		PrevURL:  "",
 		Endpoint: endpoint,
 		Cache:    *pokecache.NewCache(interval),
-		Pokedex:  map[string]customtype.Pokemon{},
+		Pokedex:  map[string]customType.Pokemon{},
 	}
 }

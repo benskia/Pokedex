@@ -15,7 +15,7 @@ import (
 
 func commandCatch(cfg *config.Config, args ...string) error {
 	if len(args) < 1 {
-		return fmt.Errorf("commandExplore: %w", customErr.ErrMissingPokemon)
+		return fmt.Errorf("commandCatch: %w", customErr.ErrMissingPokemon)
 	}
 
 	name := args[0]
@@ -32,7 +32,7 @@ func commandCatch(cfg *config.Config, args ...string) error {
 
 	cfg.Cache.Add(name, data)
 
-	pokemon := customtype.Pokemon{}
+	pokemon := customType.Pokemon{}
 	if err := json.Unmarshal(data, &pokemon); err != nil {
 		log.Fatal(err)
 	}

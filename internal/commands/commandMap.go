@@ -2,8 +2,8 @@ package commands
 
 import (
 	"encoding/json"
-	"errors"
 	"fmt"
+	"log"
 
 	"github.com/benskia/Pokedex/internal/config"
 	"github.com/benskia/Pokedex/internal/customType"
@@ -13,7 +13,8 @@ import (
 // commandMapNext gets the next 20 location-areas from PokeAPI and displays them.
 func commandMapNext(cfg *config.Config, _ ...string) error {
 	if cfg.NextURL == "" {
-		return errors.New("Already at the last page of locations.")
+		fmt.Println("Already at the last page of locations.")
+		return nil
 	}
 
 	data, err := utils.GetPayload(cfg, cfg.NextURL)
@@ -23,9 +24,9 @@ func commandMapNext(cfg *config.Config, _ ...string) error {
 
 	cfg.Cache.Add(cfg.NextURL, data)
 
-	locationAreas := customtype.LocationAreas{}
+	locationAreas := customType.LocationAreas{}
 	if err := json.Unmarshal(data, &locationAreas); err != nil {
-		return err
+		log.Fatal(err)
 	}
 
 	fmt.Println()
@@ -42,7 +43,8 @@ func commandMapNext(cfg *config.Config, _ ...string) error {
 // commandMapPrev gets the previous 20 location-areas from PokeAPI and displays them.
 func commandMapPrev(cfg *config.Config, _ ...string) error {
 	if cfg.PrevURL == "" {
-		return errors.New("Already at the last page of locations.")
+		fmt.Println("Already at the first page of locations.")
+		return nil
 	}
 
 	data, err := utils.GetPayload(cfg, cfg.PrevURL)
@@ -52,9 +54,9 @@ func commandMapPrev(cfg *config.Config, _ ...string) error {
 
 	cfg.Cache.Add(cfg.PrevURL, data)
 
-	locationAreas := customtype.LocationAreas{}
+	locationAreas := customType.LocationAreas{}
 	if err := json.Unmarshal(data, &locationAreas); err != nil {
-		return err
+		log.Fatal(err)
 	}
 
 	fmt.Println()

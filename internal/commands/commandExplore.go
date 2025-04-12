@@ -31,7 +31,7 @@ func commandExplore(cfg *config.Config, args ...string) error {
 
 	cfg.Cache.Add(name, data)
 
-	location := customtype.Location{}
+	location := customType.Location{}
 	if err := json.Unmarshal(data, &location); err != nil {
 		log.Fatal(err)
 	}
